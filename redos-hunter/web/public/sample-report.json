@@ -1,0 +1,1472 @@
+{
+  "generated_at": "2026-11-18T02:53:23+08:00",
+  "root": "/tmp/sample-app",
+  "config": {
+    "StepCap": 2000000,
+    "MaxN": 20,
+    "ExternalTimeout": 8000000000,
+    "EnableExternal": true,
+    "Samples": 200
+  },
+  "summary": {
+    "total_patterns": 10,
+    "parse_failed": 0,
+    "exponential": 5,
+    "polynomial": 1,
+    "unknown": 0,
+    "empirically_confirmed": 6
+  },
+  "patterns": [
+    {
+      "id": "p1",
+      "occurrence": {
+        "language": "go",
+        "file": "/tmp/sample-app/go/check.go",
+        "pattern": "(a+)+$",
+        "flags": "",
+        "line": 3,
+        "col": 32,
+        "kind": "call-arg",
+        "confidence": "high",
+        "raw": "`(a+)+$`",
+        "from_string": true,
+        "quote": 96,
+        "raw_string": true
+      },
+      "warnings": null,
+      "findings": [
+        {
+          "id": "(a+)+$-f3",
+          "pattern_id": "p1",
+          "severity": "exponential",
+          "confidence": "high",
+          "node_id": 3,
+          "quantifier": "{1,∞}",
+          "reason": "外层量词重复一个本身含量词的子表达式，内层量词可匹配的字符能在多次外层迭代间产生不同切分，路径数指数增长",
+          "pump_word": "a",
+          "exponential": true,
+          "degree": -1,
+          "pair_count": 4,
+          "capped": false,
+          "rule": "nested-quantifier-overlap",
+          "evidence": {
+            "candidate_name": "pump-then-killer:a",
+            "pump": "a",
+            "suffix": "a",
+            "points": [
+              {
+                "n": 1,
+                "length": 2,
+                "steps": 11,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 2,
+                "length": 3,
+                "steps": 12,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 3,
+                "length": 4,
+                "steps": 13,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 4,
+                "length": 5,
+                "steps": 14,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 5,
+                "length": 6,
+                "steps": 15,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 6,
+                "length": 7,
+                "steps": 16,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 7,
+                "length": 8,
+                "steps": 17,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 8,
+                "length": 9,
+                "steps": 18,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 9,
+                "length": 10,
+                "steps": 19,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 10,
+                "length": 11,
+                "steps": 20,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 11,
+                "length": 12,
+                "steps": 21,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 12,
+                "length": 13,
+                "steps": 22,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 13,
+                "length": 14,
+                "steps": 23,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 14,
+                "length": 15,
+                "steps": 24,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 15,
+                "length": 16,
+                "steps": 25,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 16,
+                "length": 17,
+                "steps": 26,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 17,
+                "length": 18,
+                "steps": 27,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 18,
+                "length": 19,
+                "steps": 28,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 19,
+                "length": 20,
+                "steps": 29,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 20,
+                "length": 21,
+                "steps": 30,
+                "capped": false,
+                "matched": true
+              }
+            ],
+            "fit": {
+              "kind": "exponential",
+              "exponent": 0.051357524290427496,
+              "base": 1.0526991915428014,
+              "r_squared": 0.9821183541770309,
+              "super_linear": true
+            },
+            "empirical": "exponential",
+            "vm_result_at_cap": {
+              "matched": false,
+              "steps": 0,
+              "max_depth": 0,
+              "duration_ns": 0,
+              "capped": false,
+              "backref_used": false
+            },
+            "external": [
+              {
+                "engine": "node",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 0,
+                "matched": true
+              },
+              {
+                "engine": "python",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 0,
+                "matched": true
+              }
+            ]
+          }
+        }
+      ],
+      "suggestions": [
+        {
+          "original": "(a+)+$",
+          "fixed": "(?\u003e(a+))+$",
+          "strategy": "atomic-group",
+          "why": "原子组在第一次成功匹配后即锁死，不保留可回溯的备选切分，从根源消除重复体内部的指数枚举",
+          "equivalent": "对能匹配成功的输入结果一致；仅在原本依赖回溯换一种切分才能成功的边缘情形不同，这类情形通常正是 bug",
+          "re2_safe": false,
+          "confidence": "high"
+        },
+        {
+          "original": "(a+)+$",
+          "fixed": "a+$",
+          "strategy": "flatten-nested-quantifier",
+          "why": "嵌套量词 (X+)+ 让同一串存在多种切分；按重复次数合并为单层量词后，每个字符只有一条消费路径，且匹配的字符串集合不变",
+          "equivalent": "合并后的 min/max 与嵌套重复等价；若重复体可匹配空串需人工确认空匹配语义",
+          "re2_safe": true,
+          "confidence": "high"
+        },
+        {
+          "original": "(a+)+$",
+          "fixed": "(a+)+$",
+          "strategy": "use-linear-engine",
+          "why": "Go regexp / Rust regex / RE2 基于自动机保证线性时间，同一模式不会因回溯卡死",
+          "equivalent": "RE2 不支持反向引用、环视、占有量词等特性；若用到需先确认引擎能力",
+          "re2_safe": true,
+          "confidence": "high"
+        }
+      ],
+      "equiv_check": {
+        "equivalent": true,
+        "tested": 200,
+        "countercases": null,
+        "note": "在 200 个样本上匹配行为一致（不构成严格证明，建议结合业务用例复核）"
+      }
+    },
+    {
+      "id": "p2",
+      "occurrence": {
+        "language": "go",
+        "file": "/tmp/sample-app/go/check.go",
+        "pattern": "[0-9a-f]{8}",
+        "flags": "",
+        "line": 4,
+        "col": 31,
+        "kind": "call-arg",
+        "confidence": "high",
+        "raw": "`[0-9a-f]{8}`",
+        "from_string": true,
+        "quote": 96,
+        "raw_string": true
+      },
+      "warnings": null,
+      "findings": null,
+      "suggestions": null
+    },
+    {
+      "id": "p3",
+      "occurrence": {
+        "language": "java",
+        "file": "/tmp/sample-app/java/Validator.java",
+        "pattern": "(\\w+)*$",
+        "flags": "",
+        "line": 2,
+        "col": 70,
+        "kind": "call-arg",
+        "confidence": "high",
+        "raw": "\"(\\\\w+)*$\"",
+        "from_string": true,
+        "quote": 34,
+        "raw_string": false
+      },
+      "warnings": null,
+      "findings": [
+        {
+          "id": "(\\w+)*$-f3",
+          "pattern_id": "p3",
+          "severity": "exponential",
+          "confidence": "high",
+          "node_id": 3,
+          "quantifier": "{0,∞}",
+          "reason": "外层量词重复一个本身含量词的子表达式，内层量词可匹配的字符能在多次外层迭代间产生不同切分，路径数指数增长",
+          "pump_word": "0",
+          "exponential": true,
+          "degree": -1,
+          "pair_count": 16,
+          "capped": false,
+          "rule": "nested-quantifier-overlap",
+          "evidence": {
+            "candidate_name": "pump-then-killer:0",
+            "pump": "0",
+            "suffix": "0",
+            "points": [
+              {
+                "n": 1,
+                "length": 2,
+                "steps": 11,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 2,
+                "length": 3,
+                "steps": 12,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 3,
+                "length": 4,
+                "steps": 13,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 4,
+                "length": 5,
+                "steps": 14,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 5,
+                "length": 6,
+                "steps": 15,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 6,
+                "length": 7,
+                "steps": 16,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 7,
+                "length": 8,
+                "steps": 17,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 8,
+                "length": 9,
+                "steps": 18,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 9,
+                "length": 10,
+                "steps": 19,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 10,
+                "length": 11,
+                "steps": 20,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 11,
+                "length": 12,
+                "steps": 21,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 12,
+                "length": 13,
+                "steps": 22,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 13,
+                "length": 14,
+                "steps": 23,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 14,
+                "length": 15,
+                "steps": 24,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 15,
+                "length": 16,
+                "steps": 25,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 16,
+                "length": 17,
+                "steps": 26,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 17,
+                "length": 18,
+                "steps": 27,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 18,
+                "length": 19,
+                "steps": 28,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 19,
+                "length": 20,
+                "steps": 29,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 20,
+                "length": 21,
+                "steps": 30,
+                "capped": false,
+                "matched": true
+              }
+            ],
+            "fit": {
+              "kind": "exponential",
+              "exponent": 0.051357524290427496,
+              "base": 1.0526991915428014,
+              "r_squared": 0.9821183541770309,
+              "super_linear": true
+            },
+            "empirical": "exponential",
+            "vm_result_at_cap": {
+              "matched": false,
+              "steps": 0,
+              "max_depth": 0,
+              "duration_ns": 0,
+              "capped": false,
+              "backref_used": false
+            },
+            "external": [
+              {
+                "engine": "node",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 0,
+                "matched": true
+              },
+              {
+                "engine": "python",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 0,
+                "matched": true
+              }
+            ]
+          }
+        }
+      ],
+      "suggestions": [
+        {
+          "original": "(\\w+)*$",
+          "fixed": "(?\u003e([0-9A-Z_a-z]+))*$",
+          "strategy": "atomic-group",
+          "why": "原子组在第一次成功匹配后即锁死，不保留可回溯的备选切分，从根源消除重复体内部的指数枚举",
+          "equivalent": "对能匹配成功的输入结果一致；仅在原本依赖回溯换一种切分才能成功的边缘情形不同，这类情形通常正是 bug",
+          "re2_safe": false,
+          "confidence": "high"
+        },
+        {
+          "original": "(\\w+)*$",
+          "fixed": "[0-9A-Z_a-z]*$",
+          "strategy": "flatten-nested-quantifier",
+          "why": "嵌套量词 (X+)+ 让同一串存在多种切分；按重复次数合并为单层量词后，每个字符只有一条消费路径，且匹配的字符串集合不变",
+          "equivalent": "合并后的 min/max 与嵌套重复等价；若重复体可匹配空串需人工确认空匹配语义",
+          "re2_safe": true,
+          "confidence": "high"
+        },
+        {
+          "original": "(\\w+)*$",
+          "fixed": "(\\w+)*$",
+          "strategy": "use-linear-engine",
+          "why": "Go regexp / Rust regex / RE2 基于自动机保证线性时间，同一模式不会因回溯卡死",
+          "equivalent": "RE2 不支持反向引用、环视、占有量词等特性；若用到需先确认引擎能力",
+          "re2_safe": true,
+          "confidence": "high"
+        }
+      ],
+      "equiv_check": {
+        "equivalent": true,
+        "tested": 200,
+        "countercases": null,
+        "note": "在 200 个样本上匹配行为一致（不构成严格证明，建议结合业务用例复核）"
+      }
+    },
+    {
+      "id": "p4",
+      "occurrence": {
+        "language": "python",
+        "file": "/tmp/sample-app/py/parsers.py",
+        "pattern": "(\\d+)+-",
+        "flags": "",
+        "line": 2,
+        "col": 20,
+        "kind": "call-arg",
+        "confidence": "high",
+        "raw": "r\"(\\d+)+-\"",
+        "from_string": true,
+        "quote": 34,
+        "raw_string": true
+      },
+      "warnings": null,
+      "findings": [
+        {
+          "id": "(\\d+)+--f3",
+          "pattern_id": "p4",
+          "severity": "exponential",
+          "confidence": "high",
+          "node_id": 3,
+          "quantifier": "{1,∞}",
+          "reason": "外层量词重复一个本身含量词的子表达式，内层量词可匹配的字符能在多次外层迭代间产生不同切分，路径数指数增长",
+          "pump_word": "0",
+          "exponential": true,
+          "degree": -1,
+          "pair_count": 4,
+          "capped": false,
+          "rule": "nested-quantifier-overlap",
+          "evidence": {
+            "candidate_name": "pump-then-killer:0",
+            "pump": "0",
+            "suffix": "0",
+            "points": [
+              {
+                "n": 1,
+                "length": 2,
+                "steps": 35,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 2,
+                "length": 3,
+                "steps": 75,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 3,
+                "length": 4,
+                "steps": 155,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 4,
+                "length": 5,
+                "steps": 315,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 5,
+                "length": 6,
+                "steps": 635,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 6,
+                "length": 7,
+                "steps": 1275,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 7,
+                "length": 8,
+                "steps": 2555,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 8,
+                "length": 9,
+                "steps": 5115,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 9,
+                "length": 10,
+                "steps": 10235,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 10,
+                "length": 11,
+                "steps": 20475,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 11,
+                "length": 12,
+                "steps": 40955,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 12,
+                "length": 13,
+                "steps": 81915,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 13,
+                "length": 14,
+                "steps": 163835,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 14,
+                "length": 15,
+                "steps": 327675,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 15,
+                "length": 16,
+                "steps": 655355,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 16,
+                "length": 17,
+                "steps": 1310715,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 17,
+                "length": 18,
+                "steps": 2000000,
+                "capped": true,
+                "matched": false
+              }
+            ],
+            "fit": {
+              "kind": "exponential",
+              "exponent": 0.6923425265433542,
+              "base": 1.9983913392612764,
+              "r_squared": 0.999592920255851,
+              "super_linear": true
+            },
+            "empirical": "exponential",
+            "vm_result_at_cap": {
+              "matched": false,
+              "steps": 0,
+              "max_depth": 0,
+              "duration_ns": 0,
+              "capped": false,
+              "backref_used": false
+            },
+            "external": [
+              {
+                "engine": "node",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 139,
+                "matched": false
+              },
+              {
+                "engine": "python",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 95,
+                "matched": false
+              }
+            ]
+          }
+        }
+      ],
+      "suggestions": [
+        {
+          "original": "(\\d+)+-",
+          "fixed": "(?\u003e([0-9]+))+-",
+          "strategy": "atomic-group",
+          "why": "原子组在第一次成功匹配后即锁死，不保留可回溯的备选切分，从根源消除重复体内部的指数枚举",
+          "equivalent": "对能匹配成功的输入结果一致；仅在原本依赖回溯换一种切分才能成功的边缘情形不同，这类情形通常正是 bug",
+          "re2_safe": false,
+          "confidence": "high"
+        },
+        {
+          "original": "(\\d+)+-",
+          "fixed": "[0-9]+-",
+          "strategy": "flatten-nested-quantifier",
+          "why": "嵌套量词 (X+)+ 让同一串存在多种切分；按重复次数合并为单层量词后，每个字符只有一条消费路径，且匹配的字符串集合不变",
+          "equivalent": "合并后的 min/max 与嵌套重复等价；若重复体可匹配空串需人工确认空匹配语义",
+          "re2_safe": true,
+          "confidence": "high"
+        },
+        {
+          "original": "(\\d+)+-",
+          "fixed": "(\\d+)+-",
+          "strategy": "use-linear-engine",
+          "why": "Go regexp / Rust regex / RE2 基于自动机保证线性时间，同一模式不会因回溯卡死",
+          "equivalent": "RE2 不支持反向引用、环视、占有量词等特性；若用到需先确认引擎能力",
+          "re2_safe": true,
+          "confidence": "high"
+        }
+      ],
+      "equiv_check": {
+        "equivalent": true,
+        "tested": 200,
+        "countercases": null,
+        "note": "在 200 个样本上匹配行为一致（不构成严格证明，建议结合业务用例复核）"
+      }
+    },
+    {
+      "id": "p5",
+      "occurrence": {
+        "language": "python",
+        "file": "/tmp/sample-app/py/parsers.py",
+        "pattern": "[a-z]+@",
+        "flags": "",
+        "line": 3,
+        "col": 19,
+        "kind": "call-arg",
+        "confidence": "high",
+        "raw": "r\"[a-z]+@\"",
+        "from_string": true,
+        "quote": 34,
+        "raw_string": true
+      },
+      "warnings": null,
+      "findings": null,
+      "suggestions": null
+    },
+    {
+      "id": "p6",
+      "occurrence": {
+        "language": "python",
+        "file": "/tmp/sample-app/py/parsers.py",
+        "pattern": "\\d{3}-\\d{4}",
+        "flags": "",
+        "line": 4,
+        "col": 19,
+        "kind": "call-arg",
+        "confidence": "high",
+        "raw": "r\"\\d{3}-\\d{4}\"",
+        "from_string": true,
+        "quote": 34,
+        "raw_string": true
+      },
+      "warnings": null,
+      "findings": null,
+      "suggestions": null
+    },
+    {
+      "id": "p7",
+      "occurrence": {
+        "language": "javascript",
+        "file": "/tmp/sample-app/src/validator.js",
+        "pattern": "^([a-zA-Z0-9]+)+@",
+        "flags": "",
+        "line": 2,
+        "col": 18,
+        "kind": "literal",
+        "confidence": "high",
+        "raw": "/^([a-zA-Z0-9]+)+@/",
+        "from_string": false,
+        "quote": 0,
+        "raw_string": false
+      },
+      "warnings": null,
+      "findings": [
+        {
+          "id": "^([a-zA-Z0-9]+)+@-f4",
+          "pattern_id": "p7",
+          "severity": "exponential",
+          "confidence": "high",
+          "node_id": 4,
+          "quantifier": "{1,∞}",
+          "reason": "外层量词重复一个本身含量词的子表达式，内层量词可匹配的字符能在多次外层迭代间产生不同切分，路径数指数增长",
+          "pump_word": "0",
+          "exponential": true,
+          "degree": -1,
+          "pair_count": 4,
+          "capped": false,
+          "rule": "nested-quantifier-overlap",
+          "evidence": {
+            "candidate_name": "pump-then-killer:0",
+            "pump": "0",
+            "suffix": "0",
+            "points": [
+              {
+                "n": 1,
+                "length": 2,
+                "steps": 25,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 2,
+                "length": 3,
+                "steps": 47,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 3,
+                "length": 4,
+                "steps": 89,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 4,
+                "length": 5,
+                "steps": 171,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 5,
+                "length": 6,
+                "steps": 333,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 6,
+                "length": 7,
+                "steps": 655,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 7,
+                "length": 8,
+                "steps": 1297,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 8,
+                "length": 9,
+                "steps": 2579,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 9,
+                "length": 10,
+                "steps": 5141,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 10,
+                "length": 11,
+                "steps": 10263,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 11,
+                "length": 12,
+                "steps": 20505,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 12,
+                "length": 13,
+                "steps": 40987,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 13,
+                "length": 14,
+                "steps": 81949,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 14,
+                "length": 15,
+                "steps": 163871,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 15,
+                "length": 16,
+                "steps": 327713,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 16,
+                "length": 17,
+                "steps": 655395,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 17,
+                "length": 18,
+                "steps": 1310757,
+                "capped": false,
+                "matched": false
+              },
+              {
+                "n": 18,
+                "length": 19,
+                "steps": 2000000,
+                "capped": true,
+                "matched": false
+              }
+            ],
+            "fit": {
+              "kind": "exponential",
+              "exponent": 0.679187652009022,
+              "base": 1.972274907734007,
+              "r_squared": 0.9997103231955722,
+              "super_linear": true
+            },
+            "empirical": "exponential",
+            "vm_result_at_cap": {
+              "matched": false,
+              "steps": 0,
+              "max_depth": 0,
+              "duration_ns": 0,
+              "capped": false,
+              "backref_used": false
+            },
+            "external": [
+              {
+                "engine": "node",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 66,
+                "matched": false
+              }
+            ]
+          }
+        }
+      ],
+      "suggestions": [
+        {
+          "original": "^([a-zA-Z0-9]+)+@",
+          "fixed": "^(?\u003e([0-9A-Za-z]+))+@",
+          "strategy": "atomic-group",
+          "why": "原子组在第一次成功匹配后即锁死，不保留可回溯的备选切分，从根源消除重复体内部的指数枚举",
+          "equivalent": "对能匹配成功的输入结果一致；仅在原本依赖回溯换一种切分才能成功的边缘情形不同，这类情形通常正是 bug",
+          "re2_safe": false,
+          "confidence": "high"
+        },
+        {
+          "original": "^([a-zA-Z0-9]+)+@",
+          "fixed": "^[0-9A-Za-z]+@",
+          "strategy": "flatten-nested-quantifier",
+          "why": "嵌套量词 (X+)+ 让同一串存在多种切分；按重复次数合并为单层量词后，每个字符只有一条消费路径，且匹配的字符串集合不变",
+          "equivalent": "合并后的 min/max 与嵌套重复等价；若重复体可匹配空串需人工确认空匹配语义",
+          "re2_safe": true,
+          "confidence": "high"
+        },
+        {
+          "original": "^([a-zA-Z0-9]+)+@",
+          "fixed": "^([a-zA-Z0-9]+)+@",
+          "strategy": "use-linear-engine",
+          "why": "Go regexp / Rust regex / RE2 基于自动机保证线性时间，同一模式不会因回溯卡死",
+          "equivalent": "RE2 不支持反向引用、环视、占有量词等特性；若用到需先确认引擎能力",
+          "re2_safe": true,
+          "confidence": "high"
+        }
+      ],
+      "equiv_check": {
+        "equivalent": true,
+        "tested": 200,
+        "countercases": null,
+        "note": "在 200 个样本上匹配行为一致（不构成严格证明，建议结合业务用例复核）"
+      }
+    },
+    {
+      "id": "p8",
+      "occurrence": {
+        "language": "javascript",
+        "file": "/tmp/sample-app/src/validator.js",
+        "pattern": "(a|aa)*$",
+        "flags": "",
+        "line": 3,
+        "col": 19,
+        "kind": "literal",
+        "confidence": "high",
+        "raw": "/(a|aa)*$/",
+        "from_string": false,
+        "quote": 0,
+        "raw_string": false
+      },
+      "warnings": null,
+      "findings": [
+        {
+          "id": "(a|aa)*$-f6",
+          "pattern_id": "p8",
+          "severity": "exponential",
+          "confidence": "high",
+          "node_id": 6,
+          "quantifier": "{0,∞}",
+          "reason": "配对自动机发现重复体内存在歧义泵：同一串可在重复边界产生 ≥2^k 条 NFA 路径",
+          "pump_word": "aa",
+          "exponential": true,
+          "degree": -1,
+          "pair_count": 30,
+          "capped": false,
+          "rule": "pair-automaton-pump",
+          "evidence": {
+            "candidate_name": "pump-then-killer:!",
+            "pump": "aa",
+            "suffix": "!",
+            "points": [
+              {
+                "n": 1,
+                "length": 3,
+                "steps": 59,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 2,
+                "length": 5,
+                "steps": 188,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 3,
+                "length": 7,
+                "steps": 542,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 4,
+                "length": 9,
+                "steps": 1485,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 5,
+                "length": 11,
+                "steps": 3970,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 6,
+                "length": 13,
+                "steps": 10492,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 7,
+                "length": 15,
+                "steps": 27583,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 8,
+                "length": 17,
+                "steps": 72344,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 9,
+                "length": 19,
+                "steps": 189546,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 10,
+                "length": 21,
+                "steps": 496401,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 11,
+                "length": 23,
+                "steps": 1299774,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 12,
+                "length": 25,
+                "steps": 2000000,
+                "capped": true,
+                "matched": false
+              }
+            ],
+            "fit": {
+              "kind": "exponential",
+              "exponent": 0.9649420920662579,
+              "base": 2.6246356648456803,
+              "r_squared": 0.9974800998491661,
+              "super_linear": true
+            },
+            "empirical": "exponential",
+            "vm_result_at_cap": {
+              "matched": false,
+              "steps": 0,
+              "max_depth": 0,
+              "duration_ns": 0,
+              "capped": false,
+              "backref_used": false
+            },
+            "external": [
+              {
+                "engine": "node",
+                "available": true,
+                "timed_out": true,
+                "duration_ms": 0,
+                "matched": false
+              }
+            ]
+          }
+        }
+      ],
+      "suggestions": [
+        {
+          "original": "(a|aa)*$",
+          "fixed": "(?\u003e(a|aa))*$",
+          "strategy": "atomic-group",
+          "why": "原子组在第一次成功匹配后即锁死，不保留可回溯的备选切分，从根源消除重复体内部的指数枚举",
+          "equivalent": "对能匹配成功的输入结果一致；仅在原本依赖回溯换一种切分才能成功的边缘情形不同，这类情形通常正是 bug",
+          "re2_safe": false,
+          "confidence": "high"
+        },
+        {
+          "original": "(a|aa)*$",
+          "fixed": "(a|aa)*$",
+          "strategy": "use-linear-engine",
+          "why": "Go regexp / Rust regex / RE2 基于自动机保证线性时间，同一模式不会因回溯卡死",
+          "equivalent": "RE2 不支持反向引用、环视、占有量词等特性；若用到需先确认引擎能力",
+          "re2_safe": true,
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "p9",
+      "occurrence": {
+        "language": "javascript",
+        "file": "/tmp/sample-app/src/validator.js",
+        "pattern": "^https?:\\/\\/[a-z0-9.-]+",
+        "flags": "",
+        "line": 4,
+        "col": 18,
+        "kind": "literal",
+        "confidence": "high",
+        "raw": "/^https?:\\/\\/[a-z0-9.-]+/",
+        "from_string": false,
+        "quote": 0,
+        "raw_string": false
+      },
+      "warnings": null,
+      "findings": null,
+      "suggestions": null
+    },
+    {
+      "id": "p10",
+      "occurrence": {
+        "language": "javascript",
+        "file": "/tmp/sample-app/src/validator.js",
+        "pattern": "a*a*$",
+        "flags": "",
+        "line": 8,
+        "col": 28,
+        "kind": "constructor",
+        "confidence": "high",
+        "raw": "\"a*a*$\"",
+        "from_string": true,
+        "quote": 34,
+        "raw_string": false
+      },
+      "warnings": null,
+      "findings": [
+        {
+          "id": "a*a*$-f1",
+          "pattern_id": "p10",
+          "severity": "polynomial",
+          "confidence": "medium",
+          "node_id": 1,
+          "quantifier": "{0,∞}",
+          "reason": "存在 2 层在重叠字符集（如 \"a\"）上且无明确分隔的量词，失败输入下回溯约 O(n^2)",
+          "pump_word": "a",
+          "exponential": false,
+          "degree": 2,
+          "pair_count": 11,
+          "capped": false,
+          "rule": "overlapping-quantifiers",
+          "evidence": {
+            "candidate_name": "pump-then-killer:a",
+            "pump": "a",
+            "suffix": "a",
+            "points": [
+              {
+                "n": 1,
+                "length": 2,
+                "steps": 8,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 2,
+                "length": 3,
+                "steps": 9,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 3,
+                "length": 4,
+                "steps": 10,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 4,
+                "length": 5,
+                "steps": 11,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 5,
+                "length": 6,
+                "steps": 12,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 6,
+                "length": 7,
+                "steps": 13,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 7,
+                "length": 8,
+                "steps": 14,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 8,
+                "length": 9,
+                "steps": 15,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 9,
+                "length": 10,
+                "steps": 16,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 10,
+                "length": 11,
+                "steps": 17,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 11,
+                "length": 12,
+                "steps": 18,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 12,
+                "length": 13,
+                "steps": 19,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 13,
+                "length": 14,
+                "steps": 20,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 14,
+                "length": 15,
+                "steps": 21,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 15,
+                "length": 16,
+                "steps": 22,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 16,
+                "length": 17,
+                "steps": 23,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 17,
+                "length": 18,
+                "steps": 24,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 18,
+                "length": 19,
+                "steps": 25,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 19,
+                "length": 20,
+                "steps": 26,
+                "capped": false,
+                "matched": true
+              },
+              {
+                "n": 20,
+                "length": 21,
+                "steps": 27,
+                "capped": false,
+                "matched": true
+              }
+            ],
+            "fit": {
+              "kind": "exponential",
+              "exponent": 0.06148378429648935,
+              "base": 1.063413252394977,
+              "r_squared": 0.9740560466540102,
+              "super_linear": true
+            },
+            "empirical": "exponential",
+            "vm_result_at_cap": {
+              "matched": false,
+              "steps": 0,
+              "max_depth": 0,
+              "duration_ns": 0,
+              "capped": false,
+              "backref_used": false
+            },
+            "external": [
+              {
+                "engine": "node",
+                "available": true,
+                "timed_out": false,
+                "duration_ms": 0,
+                "matched": true
+              }
+            ]
+          }
+        }
+      ],
+      "suggestions": [
+        {
+          "original": "a*a*$",
+          "fixed": "(?\u003ea)*a*$",
+          "strategy": "atomic-group",
+          "why": "原子组在第一次成功匹配后即锁死，不保留可回溯的备选切分，从根源消除重复体内部的指数枚举",
+          "equivalent": "对能匹配成功的输入结果一致；仅在原本依赖回溯换一种切分才能成功的边缘情形不同，这类情形通常正是 bug",
+          "re2_safe": false,
+          "confidence": "high"
+        },
+        {
+          "original": "a*a*$",
+          "fixed": "(?:a)*a*$",
+          "strategy": "merge-overlapping-adjacent",
+          "why": "相邻量词竞争同一字符集导致边界反复回退；应合并为单个量词，并让其后继使用互斥字符集",
+          "equivalent": "此为方向性改写，需结合业务确认合法输入集合，建议配合等价性测试",
+          "re2_safe": true,
+          "confidence": "medium"
+        },
+        {
+          "original": "a*a*$",
+          "fixed": "a*a*$",
+          "strategy": "use-linear-engine",
+          "why": "Go regexp / Rust regex / RE2 基于自动机保证线性时间，同一模式不会因回溯卡死",
+          "equivalent": "RE2 不支持反向引用、环视、占有量词等特性；若用到需先确认引擎能力",
+          "re2_safe": true,
+          "confidence": "high"
+        }
+      ],
+      "equiv_check": {
+        "equivalent": true,
+        "tested": 200,
+        "countercases": null,
+        "note": "在 200 个样本上匹配行为一致（不构成严格证明，建议结合业务用例复核）"
+      }
+    }
+  ],
+  "engine_ack": {
+    "node_available": true,
+    "python_available": true
+  }
+}

@@ -1,0 +1,157 @@
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --panel-2: #f0f2f5;
+  --fg: #1a1d21;
+  --fg-dim: #5b6470;
+  --border: #d8dde3;
+  --accent: #2563eb;
+  --accent-fg: #ffffff;
+  --code-bg: #1e2530;
+  --code-fg: #e6edf3;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 16px rgba(15, 23, 42, 0.06);
+
+  --sev-exp-fg: #b91c1c;
+  --sev-exp-bg: #fee2e2;
+  --sev-exp-border: #fca5a5;
+  --sev-poly-fg: #b45309;
+  --sev-poly-bg: #fef3c7;
+  --sev-poly-border: #fcd34d;
+  --sev-safe-fg: #15803d;
+  --sev-safe-bg: #dcfce7;
+  --sev-safe-border: #86efac;
+  --sev-unk-fg: #475569;
+  --sev-unk-bg: #e2e8f0;
+  --sev-unk-border: #cbd5e1;
+
+  --chart-line: #2563eb;
+  --chart-cap: #dc2626;
+  --chart-grid: #e2e8f0;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f141b;
+  --panel: #171d26;
+  --panel-2: #1f2733;
+  --fg: #e6edf3;
+  --fg-dim: #9aa7b5;
+  --border: #2b3543;
+  --accent: #4f8cff;
+  --accent-fg: #0b1220;
+  --code-bg: #0b1017;
+  --code-fg: #e6edf3;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --sev-exp-fg: #fca5a5;
+  --sev-exp-bg: rgba(220, 38, 38, 0.16);
+  --sev-exp-border: #7f1d1d;
+  --sev-poly-fg: #fcd34d;
+  --sev-poly-bg: rgba(217, 119, 6, 0.16);
+  --sev-poly-border: #92600a;
+  --sev-safe-fg: #86efac;
+  --sev-safe-bg: rgba(34, 197, 94, 0.14);
+  --sev-safe-border: #166534;
+  --sev-unk-fg: #cbd5e1;
+  --sev-unk-bg: rgba(148, 163, 184, 0.14);
+  --sev-unk-border: #475569;
+
+  --chart-line: #4f8cff;
+  --chart-cap: #f87171;
+  --chart-grid: #26303d;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+code,
+pre,
+.mono {
+  font-family: 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Courier New', monospace;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--fg);
+  border-radius: 7px;
+  padding: 6px 12px;
+  transition: background 0.15s, border-color 0.15s;
+}
+button:hover {
+  border-color: var(--accent);
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+
+input,
+select {
+  font: inherit;
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 6px 10px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
